@@ -18,6 +18,7 @@ using Windows.Devices.Enumeration;
 using Windows.UI.Core;
 using System.Diagnostics;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
+using System.Text;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -134,12 +135,12 @@ namespace App3
 
         private void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void DeviceWatcher_Updated(DeviceWatcher sender, DeviceInformationUpdate args)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private async void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
@@ -204,7 +205,7 @@ namespace App3
 
             characteristic = ((GattCharacteristicListItem)selectedListItem).characteristic;
 
-            await characteristic.WriteValueAsync((new byte[] {1}).AsBuffer());
+            await characteristic.WriteValueAsync((Encoding.ASCII.GetBytes("123456789ABCDEFGHIJ")).AsBuffer());
 
         }
 

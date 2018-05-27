@@ -9,11 +9,11 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="ScanButton" Content="Scan" HorizontalAlignment="Left" Margin="10,450,0,0" VerticalAlignment="Top" Click="ScanButton_Click"/>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="440" Margin="10,10,0,0" VerticalAlignment="Top" Width="340" ItemClick="ListView_ItemClick" IsItemClickEnabled="True"/>
+        <ListView x:Name="listView" HorizontalAlignment="Stretch" Height="440" Margin="10,15,28,0" VerticalAlignment="Top" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" RenderTransformOrigin="0.5,0.5"/>
         <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="10,487,0,0" VerticalAlignment="Top" Click="ConnectButton_Click"/>
         <Button x:Name="ListServicesButton" Content="List Services" HorizontalAlignment="Left" Margin="10,524,0,0" VerticalAlignment="Top" Click="ListServicesButton_Click"/>
         <Button x:Name="ListCharactericsButton" Content="List Characterics" HorizontalAlignment="Left" Margin="10,561,0,0" VerticalAlignment="Top" Click="ListCharactericsButton_Click"/>
         <Button x:Name="WriteButton" Content="Write" HorizontalAlignment="Left" Margin="10,598,0,0" VerticalAlignment="Top" Click="WriteButton_Click"/>
-
+        <Button x:Name="RegisterNotifyButton" Content="Register Notify" HorizontalAlignment="Left" Margin="9,636,0,0" VerticalAlignment="Top" Click="RegisterNotifyButton_Click"/>
     </Grid>
 </Page>

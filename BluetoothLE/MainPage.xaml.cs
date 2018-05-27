@@ -19,6 +19,8 @@ using Windows.UI.Core;
 using System.Diagnostics;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using System.Text;
+using Windows.Storage.Streams;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -209,5 +211,29 @@ namespace App3
 
         }
 
+        private async void RegisterNotifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            characteristic = ((GattCharacteristicListItem)selectedListItem).characteristic;
+            characteristic.ValueChanged += Characteristic_ValueChanged;
+            await characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(
+                     GattClientCharacteristicConfigurationDescriptorValue.Notify);
+        }
+
+        private async void Characteristic_ValueChanged(
+    GattCharacteristic sender,
+    GattValueChangedEventArgs args)
+        {
+            //var dataReader = DataReader.FromBuffer(args.CharacteristicValue);
+            //byte[] bytesRead = new byte[args.CharacteristicValue.Length];
+            //dataReader.ReadBytes(bytesRead);
+
+            var data = new byte[args.CharacteristicValue.Length];
+            DataReader.FromBuffer(args.CharacteristicValue).ReadBytes(data);
+            //Debug.WriteLine(Encoding.ASCII.GetString(data));
+
+            var dialog = new MessageDialog("Received :"+ Encoding.ASCII.GetString(data));
+            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await dialog.ShowAsync());
+
+        }
     }
 }

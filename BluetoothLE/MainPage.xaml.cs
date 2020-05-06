@@ -34,7 +34,6 @@ namespace App3
         public DeviceInformationListItem(DeviceInformation deviceInformation)
         {
             this.deviceInformation = deviceInformation;
-
         }
 
         public override string ToString()
@@ -69,7 +68,6 @@ namespace App3
         public GattCharacteristicListItem(GattCharacteristic characteristic)
         {
             this.characteristic = characteristic;
-
         }
 
         public override string ToString()
@@ -101,8 +99,6 @@ namespace App3
             // Query for extra properties you want returned
             string[] requestedProperties = { "System.Devices.Aep.DeviceAddress", "System.Devices.Aep.IsConnected" };
 
-            //var deviceWatcher= new BluetoothLEAdvertisementWatcher { ScanningMode = BluetoothLEScanningMode.Active };
-
             deviceWatcher =
                          DeviceInformation.CreateWatcher(
                                  BluetoothLEDevice.GetDeviceSelectorFromPairingState(false),
@@ -124,16 +120,6 @@ namespace App3
             // Start the watcher.
             deviceWatcher.Start();
         }
-        /*
-                private async void DeviceWatcher_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
-                {
-                    args.Advertisement.
-                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => listView.Items.Add(new BluetoothLEAdvertisementReceivedEventArgs(args)));
-                }
-                    throw new NotImplementedException();
-                }
-
-                */
 
         private void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args)
         {
@@ -150,11 +136,9 @@ namespace App3
             await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => listView.Items.Add(new DeviceInformationListItem(args)));
         }
 
-
-
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-           selectedListItem = e.ClickedItem;
+            selectedListItem = e.ClickedItem;
             Debug.WriteLine(selectedListItem.ToString());
         }
 
@@ -172,43 +156,36 @@ namespace App3
         private async void ListServicesButton_Click(object sender, RoutedEventArgs e)
         {
 
-            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => listView.Items.Clear());
+            listView.Items.Clear();
             var services = await bluetoothLeDevice.GetGattServicesAsync();
 
             foreach (GattDeviceService service in services.Services)
             {
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => listView.Items.Add(new GattDeviceServiceListItem(service)));
+                listView.Items.Add(new GattDeviceServiceListItem(service));
                 Debug.WriteLine($"Service UUID: {service.Uuid}");
-               
+
             }
         }
 
         private async void ListCharactericsButton_Click(object sender, RoutedEventArgs e)
         {
-            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => listView.Items.Clear());
+            listView.Items.Clear();
 
             service = ((GattDeviceServiceListItem)selectedListItem).service;
             var characteristics = await service.GetCharacteristicsAsync();
 
             foreach (GattCharacteristic characteristic in characteristics.Characteristics)
             {
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => listView.Items.Add(new GattCharacteristicListItem(characteristic)));
+                listView.Items.Add(new GattCharacteristicListItem(characteristic));
                 Debug.WriteLine($"Characteristic UUID: {characteristic.Uuid}");
 
             }
-
-
-
         }
 
         private async void WriteButton_Click(object sender, RoutedEventArgs e)
         {
-            //await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => listView.Items.Clear());
-
             characteristic = ((GattCharacteristicListItem)selectedListItem).characteristic;
-
             await characteristic.WriteValueAsync((Encoding.ASCII.GetBytes("123456789ABCDEFGHIJ")).AsBuffer());
-
         }
 
         private async void RegisterNotifyButton_Click(object sender, RoutedEventArgs e)
@@ -231,7 +208,7 @@ namespace App3
             DataReader.FromBuffer(args.CharacteristicValue).ReadBytes(data);
             //Debug.WriteLine(Encoding.ASCII.GetString(data));
 
-            var dialog = new MessageDialog("Received :"+ Encoding.ASCII.GetString(data));
+            var dialog = new MessageDialog("Received :" + Encoding.ASCII.GetString(data));
             await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await dialog.ShowAsync());
 
         }

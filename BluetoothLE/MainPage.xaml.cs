@@ -185,7 +185,7 @@ namespace App3
         private async void WriteButton_Click(object sender, RoutedEventArgs e)
         {
             characteristic = ((GattCharacteristicListItem)selectedListItem).characteristic;
-            await characteristic.WriteValueAsync((Encoding.ASCII.GetBytes("123456789ABCDEFGHIJ")).AsBuffer());
+            await characteristic.WriteValueAsync((Encoding.ASCII.GetBytes("1")).AsBuffer());
         }
 
         private async void RegisterNotifyButton_Click(object sender, RoutedEventArgs e)
